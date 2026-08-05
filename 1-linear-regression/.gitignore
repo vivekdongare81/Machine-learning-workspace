@@ -1,13 +1,10 @@
 # macOS
 .DS_Store
-.AppleDouble
-.LSOverride
 
 # Python
 __pycache__/
 *.py[cod]
 *.pyo
-*.pyd
 
 # Jupyter
 .ipynb_checkpoints/
@@ -15,8 +12,7 @@ __pycache__/
 # VS Code
 .vscode/
 
-# Virtual environments
+# Environment
 .venv/
-.venv310/
 venv/
 .env
