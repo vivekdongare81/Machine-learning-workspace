@@ -17,9 +17,9 @@ Motive - hands on of all ML algos
 
 | Dependency | Version | Notes |
 |---|---|---|
-| **Python** | `3.10.x` | Other versions may work but are untested |
+| **Python** | `3.10.x` ||
 | **numpy** | `>=1.24, <3.0` | |
-| **matplotlib** | `>=3.7, <4.0` | ⚠ 3.8+ removed `CheckButtons.rectangles` — patched in `plt_one_addpt_onclick.py` |
+| **matplotlib** | `>=3.7, <4.0` |
 | **scipy** | `>=1.10, <2.0` | |
 | **scikit-learn** | `>=1.2, <2.0` | |
 | **ipykernel** | `>=6.0` | Jupyter kernel |
@@ -41,7 +41,5 @@ pip install -r requirements.txt
 # 3. Register the kernel with Jupyter
 python -m ipykernel install --user --name=venv310 --display-name "Python 3.10 (ml)"
 ```
-
-> **VS Code**: Select the `.venv310` kernel via the kernel picker (top-right of any notebook).
 
 ---
