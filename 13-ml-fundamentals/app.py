@@ -13,8 +13,13 @@ logger = logging.getLogger("ml-serving")
 app = FastAPI(title="ML Prediction API", version=MODEL_VERSION)
 
 # Load once when the process starts, not on every request.
-model = joblib.load(MODEL_PATH)
-expected_features = list(model.feature_names_in_)
+# If loading fails, keep the process up but report "not ready" (503) instead of crashing.
+try:
+    model = joblib.load(MODEL_PATH)
+    expected_features = list(model.feature_names_in_)
+except Exception:
+    logger.exception("Model failed to load")
+    model, expected_features = None, []
 
 class PredictionRequest(BaseModel):
     features: dict[str, float]
@@ -38,6 +43,8 @@ def ready():
 
 @app.post("/predict", response_model=PredictionResponse)
 def predict(request: PredictionRequest):
+    if model is None:
+        raise HTTPException(status_code=503, detail="Model not ready")
     missing = set(expected_features) - set(request.features)
     extra = set(request.features) - set(expected_features)
     if missing or extra:
