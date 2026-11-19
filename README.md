@@ -70,7 +70,3 @@ pip install -r requirements.txt
 # 3. Register the kernel with Jupyter
 python -m ipykernel install --user --name=venv310 --display-name "Python 3.10 (ml)"
 ```
-
----
-
-**Next:** deep learning and GenAI continue in a separate repository.
