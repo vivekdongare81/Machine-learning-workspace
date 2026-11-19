@@ -3,6 +3,8 @@
 Hands-on notes and code for the classical ML algorithms, the fundamentals around them, and two end-to-end projects.
 Most notebooks follow the same pattern: **why → intuition → formula (where needed) → code → experiments → interview notes**.
 
+**Interview prep:** [INTERVIEW-MAP.md](INTERVIEW-MAP.md) lists the questions asked in AI and ML engineer interviews and links each one to the notebook section that answers it.
+
 ---
 
 ## Topics
