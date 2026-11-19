@@ -1,0 +1,58 @@
+# Training configuration. Every tunable lives here, not in code:
+# change an experiment by editing (or copying) this file, then `make train CONFIG=...`.
+seed: 42
+
+data:
+  url: https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv
+  path: data/raw/Telco-Customer-Churn.csv
+  # Pins the exact dataset version. Training fails if the file ever changes,
+  # so a silently modified upstream file can't quietly change the model.
+  sha256: 16320c9c1ec72448db59aa0a26a0b95401046bef5d02fd3aeb906448e3055e91
+
+# Stratified random split (fractions of all rows; train gets the rest).
+# The dataset has no scoring timestamp; with one, a time-based split would be preferred.
+split:
+  validation_fraction: 0.16
+  test_fraction: 0.20
+
+cv:
+  n_splits: 5
+
+# Illustrative costs used to pick the decision threshold on validation data:
+# missing a churner (5) vs. contacting a customer who would have stayed (1).
+threshold:
+  false_negative_cost: 5.0
+  false_positive_cost: 1.0
+
+# Candidate models. The one with the best validation average precision wins.
+models:
+  - name: logistic_regression
+    type: logistic_regression
+    params: { max_iter: 2000, class_weight: balanced }
+  - name: decision_tree
+    type: decision_tree
+    params: { max_depth: 6, min_samples_leaf: 20, class_weight: balanced }
+  - name: random_forest
+    type: random_forest
+    params: { n_estimators: 250, min_samples_leaf: 5, class_weight: balanced_subsample, n_jobs: -1 }
+
+# Test-set error analysis broken down by these customer segments.
+evaluation:
+  segment_columns: [Contract, InternetService, PaymentMethod]
+  capacity_fraction: 0.10 # retention team can contact the top 10% riskiest customers
+
+# Release gates on the held-out test set. If any fails, training exits with an
+# error and does NOT publish the model to artifacts/ (reports are still written).
+quality_gates:
+  min_test_average_precision: 0.50
+  min_test_recall: 0.60
+
+output:
+  artifact_dir: artifacts # current model + artifacts/runs/<run_id>/ history
+  report_dir: reports
+
+# Optional experiment tracking (pip install -e ".[tracking]").
+tracking:
+  enabled: false
+  tracking_uri: sqlite:///mlflow.db
+  experiment_name: customer-churn

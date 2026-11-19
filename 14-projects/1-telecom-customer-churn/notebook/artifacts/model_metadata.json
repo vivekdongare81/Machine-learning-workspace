@@ -1,0 +1,81 @@
+{
+  "project": "customer-churn-prediction",
+  "target": "Churn",
+  "positive_class": 1,
+  "identifier_columns_excluded": [
+    "customerID"
+  ],
+  "features": [
+    "gender",
+    "SeniorCitizen",
+    "Partner",
+    "Dependents",
+    "tenure",
+    "PhoneService",
+    "MultipleLines",
+    "InternetService",
+    "OnlineSecurity",
+    "OnlineBackup",
+    "DeviceProtection",
+    "TechSupport",
+    "StreamingTV",
+    "StreamingMovies",
+    "Contract",
+    "PaperlessBilling",
+    "PaymentMethod",
+    "MonthlyCharges",
+    "TotalCharges"
+  ],
+  "numeric_features": [
+    "SeniorCitizen",
+    "tenure",
+    "MonthlyCharges",
+    "TotalCharges"
+  ],
+  "categorical_features": [
+    "gender",
+    "Partner",
+    "Dependents",
+    "PhoneService",
+    "MultipleLines",
+    "InternetService",
+    "OnlineSecurity",
+    "OnlineBackup",
+    "DeviceProtection",
+    "TechSupport",
+    "StreamingTV",
+    "StreamingMovies",
+    "Contract",
+    "PaperlessBilling",
+    "PaymentMethod"
+  ],
+  "selected_model": "LogisticRegression",
+  "decision_threshold": 0.4099999999999999,
+  "threshold_cost_assumptions": {
+    "false_negative_cost": 5.0,
+    "false_positive_cost": 1.0
+  },
+  "dataset_source": "https://raw.githubusercontent.com/IBM/telco-customer-churn-on-icp4d/master/data/Telco-Customer-Churn.csv",
+  "dataset_rows": 7043,
+  "random_state": 42,
+  "python_version": "3.10.20",
+  "pandas_version": "2.3.3",
+  "scikit_learn_version": "1.7.2",
+  "created_at_utc": "2026-10-14T10:02:20.503286+00:00",
+  "test_metrics": {
+    "model": "LogisticRegression",
+    "threshold": 0.4099999999999999,
+    "accuracy": 0.7061745919091554,
+    "precision": 0.47076023391812866,
+    "recall": 0.8609625668449198,
+    "f1": 0.6086956521739131,
+    "average_precision": 0.6316723416936046,
+    "roc_auc": 0.8420574026712133,
+    "brier_score": 0.16800583607484426
+  },
+  "limitations": [
+    "Public educational dataset; not production data",
+    "Random split used because a prediction-time chronology is not specified",
+    "Threshold costs are illustrative and must be replaced with business estimates"
+  ]
+}

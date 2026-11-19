@@ -20,3 +20,6 @@ __pycache__/
 .venv310/
 venv/
 .env
+
+# Large datasets (GitHub rejects files > 100 MB); the notebook re-downloads it
+14-projects/2-fraud-detection/notebook/data/raw/creditcard.csv

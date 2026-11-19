@@ -1,0 +1,14 @@
+# Local run of the serving image: docker compose up --build
+services:
+  churn-api:
+    build: .
+    image: churn-api:latest
+    ports: ["127.0.0.1:8000:8000"]
+    restart: unless-stopped
+    environment:
+      CHURN_LOG_FORMAT: json
+      CHURN_LOG_LEVEL: INFO
+    # To serve another published version without rebuilding (e.g. a rollback),
+    # mount the artifacts and point CHURN_ARTIFACT_DIR at artifacts/runs/<run_id>:
+    # volumes: ["./artifacts:/app/artifacts:ro"]
+    # environment: { CHURN_ARTIFACT_DIR: /app/artifacts/runs/<run_id> }

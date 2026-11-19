@@ -1,0 +1,56 @@
+# Training configuration. Every tunable lives here, not in code:
+# change an experiment by editing (or copying) this file, then `make train CONFIG=...`.
+seed: 42
+
+data:
+  url: https://raw.githubusercontent.com/nsethi31/Kaggle-Data-Credit-Card-Fraud-Detection/master/creditcard.csv
+  path: data/raw/creditcard.csv
+  # Pins the exact dataset version. Training fails if the file ever changes,
+  # so a silently modified upstream file can't quietly change the model.
+  sha256: 33a178be65174943a07d1736acf5898f6c8e1fa80950dbbe598c17eda968ec59
+
+# Time-ordered split: train on the past, validate and test on later periods.
+split:
+  time_column: Time
+  train_fraction: 0.60
+  validation_fraction: 0.20 # test gets the remaining (latest) 20%
+
+# Cross-validation inside the training period. time_series keeps each fold's
+# validation data later than its training data (no peeking into the future).
+cv:
+  strategy: time_series
+  n_splits: 4
+
+# Illustrative costs used to pick the decision threshold on validation data.
+# Replace with real business estimates (cost of a missed fraud vs. a false alert).
+threshold:
+  false_negative_cost: 10.0
+  false_positive_cost: 1.0
+
+# Candidate models. The one with the best validation average precision wins.
+models:
+  - name: logistic_regression
+    type: logistic_regression
+    params: { max_iter: 2000, class_weight: balanced }
+  - name: random_forest
+    type: random_forest
+    params: { n_estimators: 250, min_samples_leaf: 2, class_weight: balanced_subsample, n_jobs: -1 }
+  - name: extra_trees
+    type: extra_trees
+    params: { n_estimators: 250, min_samples_leaf: 2, class_weight: balanced, n_jobs: -1 }
+
+# Release gates on the held-out test period. If any fails, training exits with
+# an error and does NOT publish the model to artifacts/ (reports are still written).
+quality_gates:
+  min_test_average_precision: 0.50
+  min_test_recall: 0.60
+
+output:
+  artifact_dir: artifacts # current model + artifacts/runs/<run_id>/ history
+  report_dir: reports
+
+# Optional experiment tracking (pip install -e ".[tracking]").
+tracking:
+  enabled: false
+  tracking_uri: sqlite:///mlflow.db
+  experiment_name: fraud-detection

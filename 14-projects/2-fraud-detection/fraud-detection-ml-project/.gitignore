@@ -1,0 +1,30 @@
+# Environments and secrets
+.venv/
+.env
+
+# Python and tool caches
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+.ipynb_checkpoints/
+
+# Data, models and reports are produced by the pipeline, never committed
+data/raw/*
+!data/raw/.gitkeep
+artifacts/*
+!artifacts/.gitkeep
+reports/*
+!reports/.gitkeep
+
+# Experiment tracking
+mlruns/
+mlflow.db
+
+.DS_Store

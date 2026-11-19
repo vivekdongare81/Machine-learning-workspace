@@ -1,0 +1,14 @@
+# Local run of the serving image: docker compose up --build
+services:
+  fraud-api:
+    build: .
+    image: fraud-risk-api:latest
+    ports: ["127.0.0.1:8000:8000"]
+    restart: unless-stopped
+    environment:
+      FRAUD_LOG_FORMAT: json
+      FRAUD_LOG_LEVEL: INFO
+    # To serve another published version without rebuilding (e.g. a rollback),
+    # mount the artifacts and point FRAUD_ARTIFACT_DIR at artifacts/runs/<run_id>:
+    # volumes: ["./artifacts:/app/artifacts:ro"]
+    # environment: { FRAUD_ARTIFACT_DIR: /app/artifacts/runs/<run_id> }
