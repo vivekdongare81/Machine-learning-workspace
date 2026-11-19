@@ -1,9 +1,36 @@
-python==3.10.*
+# Python 3.10.x  (pip cannot pin the interpreter; create the venv with python3.10)
 
+# Core
 numpy>=1.24,<3.0
-matplotlib>=3.7,<4.0
+pandas>=2.0,<3.0
 scipy>=1.10,<2.0
 scikit-learn>=1.2,<2.0
+statsmodels>=0.14,<1.0
+
+# Plotting
+matplotlib>=3.7,<4.0
+seaborn>=0.13,<1.0
+
+# Boosting libraries (03-decision-trees-and-ensembles, 12-all-algo-sklearn-cheatsheet)
+xgboost>=2.0
+lightgbm>=4.0
+catboost>=1.2
+
+# Dimensionality reduction (08-dimensionality-reduction)
+umap-learn>=0.5
+
+# Explainability (13-ml-fundamentals/5-ml-explainability)
+shap>=0.45
+
+# Serving (13-ml-fundamentals/6-ml-deployments, 14-projects)
+joblib>=1.3
+fastapi>=0.110
+uvicorn>=0.29
+pydantic>=2.0,<3.0
+httpx>=0.27          # FastAPI TestClient
+
+# Experiment tracking (optional, 14-projects notebooks)
+mlflow>=2.0
 
 # Jupyter / interactive
 ipykernel>=6.0
