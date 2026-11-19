@@ -8,6 +8,25 @@ Revision order before an interview: [13/1][f1], [13/2][f2], [KNN][knn], then the
 
 ## Core topics
 
+### NumPy and pandas
+
+| Question | Where |
+|---|---|
+| Why is NumPy faster than Python lists? | [NumPy][np] sec 1, Q1 |
+| `axis=0` vs `axis=1`? float32 vs float64? | [NumPy][np] sec 2, Q2, Q9 |
+| View or copy: what does slicing return? | [NumPy][np] sec 4, Q4 |
+| Explain broadcasting. How do you get pairwise distances without a loop? | [NumPy][np] sec 5, Q3, Q6 |
+| `*` vs `@`? | [NumPy][np] sec 7, Q5 |
+| Why subtract the maximum in softmax? | [NumPy][np] sec 9, Q7 |
+| `loc` vs `iloc`? What is `SettingWithCopyWarning`? | [pandas][pd] sec 5, Q1, Q4 |
+| How do you handle missing values in pandas? | [pandas][pd] sec 6, Q5 |
+| `agg` vs `transform` in a group-by? | [pandas][pd] sec 7, Q2 |
+| What can go wrong with a merge? | [pandas][pd] sec 8, Q3 |
+| How do you build a rolling feature without leakage? | [pandas][pd] sec 10, Q7 |
+| Why avoid `apply(axis=1)`? How do you reduce memory? | [pandas][pd] sec 11, 12, Q6, Q8 |
+| How do you build a feature table with a cut-off date? | [pandas][pd] sec 13 |
+| Coding tasks: top-N per group, customers with no orders, rolling average per group | [pandas][pd] Q9-Q11 |
+
 ### ML fundamentals
 
 | Question | Where |
@@ -283,6 +302,8 @@ sklearn syntax for every algorithm: [cheatsheet][cs].
 
 | Trade-off | Where |
 |---|---|
+| Python loops vs vectorized code; float32 vs float64; views vs copies | [NumPy][np] sec 11 |
+| pandas vs Polars vs DuckDB vs Spark; `apply` vs vectorized; wide vs long | [pandas][pd] sec 14, Q12 |
 | Simple vs complex model (bias vs variance) | [13/1][f1] sec 3, Q1 |
 | L1 vs L2 regularization | [13/1][f1] sec 4, Q5 |
 | Bagging vs boosting | [13/1][f1] sec 3, Q13 |
@@ -321,6 +342,8 @@ Short answers for now; these still need to go into the notebooks.
 | What is MASE? | MAE divided by the in-sample MAE of a (seasonal) naive forecast. Below 1 beats naive. It compares across series of different scales and works with zeros. |
 | What is Prophet? | An additive model (trend + seasonality + holidays) that is quick to fit. A good baseline for business series with strong seasonality. |
 
+[np]: 00-numpy-and-pandas/1-numpy-for-ml.ipynb
+[pd]: 00-numpy-and-pandas/2-pandas-for-ml.ipynb
 [f1]: 13-ml-fundamentals/1-ml-fundamentals.ipynb
 [f2]: 13-ml-fundamentals/2-ml-metrics.ipynb
 [f3]: 13-ml-fundamentals/3-ml-feature-engineering.ipynb

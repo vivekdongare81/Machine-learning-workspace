@@ -11,6 +11,7 @@ Interview questions and where each one is answered: [INTERVIEW-MAP.md](INTERVIEW
 
 | Folder | What's inside |
 |---|---|
+| [`00-numpy-and-pandas/`](00-numpy-and-pandas) | NumPy for ML (shapes and axes, broadcasting, vectorization, matrix shapes, numerical stability) and pandas for ML (dtypes, group-by, joins, reshaping, time series without leakage, vectorized code, memory, building a feature table) |
 | [`01-linear-regression/`](01-linear-regression) | NumPy and vectorization, linear regression from scratch (single and multiple features), gradient descent, feature scaling, learning rate, polynomial features, scikit-learn |
 | [`02-logistic-regression/`](02-logistic-regression) | Why not MSE (MLE, cross-entropy), sigmoid and decision boundary, logistic loss, gradient descent, overfitting and regularization, scikit-learn |
 | [`03-decision-trees-and-ensembles/`](03-decision-trees-and-ensembles) | Decision tree, random forest, AdaBoost, gradient boosting (from scratch), XGBoost, LightGBM, CatBoost |
