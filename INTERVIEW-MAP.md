@@ -45,6 +45,11 @@ Revision order before an interview: [13/1][f1], [13/2][f2], [KNN][knn], then the
 | Why log loss (cross-entropy) and not MSE for logistic regression? | [02/1][g1], [02/3][g3] |
 | What is the gradient of logistic regression? | [02/4][g4] |
 | How does regularization change the cost and the gradient? | [02/6][g6] |
+| Normal equation vs gradient descent? | [01/6][l6] "Normal equation vs gradient descent" |
+| Batch vs mini-batch vs stochastic gradient descent? | [01/6][l6] "Batch vs mini-batch vs stochastic gradient descent" |
+| What are the assumptions of linear regression? | [01/6][l6] "Checking the assumptions" |
+| How do you read a logistic regression coefficient (odds ratio)? | [02/5][g5] "Reading the coefficients" |
+| Softmax vs one-vs-rest for more than two classes? | [02/5][g5] "More than two classes" |
 
 ### Metrics
 
@@ -80,6 +85,7 @@ Revision order before an interview: [13/1][f1], [13/2][f2], [KNN][knn], then the
 | How do you select features? What is multicollinearity? | [13/3][f3] "Feature selection", "Correlation / multicollinearity" |
 | Why put preprocessing inside a Pipeline? What is ColumnTransformer? | [13/3][f3] "ColumnTransformer + Pipeline"; [13/4][f4] |
 | GridSearchCV vs RandomizedSearchCV? | [13/4][f4] |
+| Bayesian optimization (Optuna) vs grid and random search? | [13/4][f4] sec 23 |
 | Why is the best CV score after tuning optimistic? What is nested CV? | [13/4][f4]; [13/1][f1] sec 5 |
 | What is early stopping? | [13/4][f4] |
 | How do you save, load and reproduce a model? | [13/4][f4] |
@@ -92,6 +98,7 @@ Revision order before an interview: [13/1][f1], [13/2][f2], [KNN][knn], then the
 | Impurity-based vs permutation importance? What are their pitfalls? | [13/5][f5] "Tree feature importance", "Permutation importance" |
 | What is SHAP, and how do you read a SHAP plot? | [13/5][f5] "SHAP", "SHAP global/local explanations" |
 | PDP vs ICE? | [13/5][f5] "PDP", "ICE" |
+| LIME vs SHAP? | [13/5][f5] sec 15 |
 | How do correlated features break explanations? Is importance causality? | [13/5][f5] "Correlated features", "Explainability vs causality" |
 
 ### Deployment and MLOps
@@ -118,6 +125,7 @@ Revision order before an interview: [13/1][f1], [13/2][f2], [KNN][knn], then the
 | How do you design an A/B test (metric, randomization unit, sample size)? | [13/7][f7] "A/B test design" |
 | How do you analyse one (SRM check, z-test, lift with a CI)? | [13/7][f7] "A/B test analysis" |
 | Peeking, multiple testing, novelty effect, Simpson's paradox? | [13/7][f7] "Pitfalls" |
+| What is CUPED, and why does it make tests faster? | [13/7][f7] sec 10 |
 | Is model A really better than model B on the same test set? | [13/7][f7] "Comparing two models" (McNemar, paired bootstrap) |
 | Offline vs online evaluation, and how it carries over to LLM evals? | [13/7][f7] "Offline vs online evaluation" |
 
@@ -131,6 +139,7 @@ Revision order before an interview: [13/1][f1], [13/2][f2], [KNN][knn], then the
 | What is BM25? What is hybrid search? | [13/8][f8] "BM25 from scratch" |
 | Why do embeddings beat sparse methods, and when don't they? | [13/8][f8] "Limits of sparse methods" |
 | Classical model or LLM: when do you use which? | [13/8][f8] "Classical model vs LLM" |
+| Stemming vs lemmatization? word2vec vs contextual embeddings? | [13/8][f8] sec 14 |
 | Character n-grams, the hashing trick? | [13/8][f8] "Practical tricks" |
 
 ### Embeddings and vector search
@@ -149,9 +158,15 @@ Revision order before an interview: [13/1][f1], [13/2][f2], [KNN][knn], then the
 
 | Question | Where |
 |---|---|
-| How does a decision tree choose a split? What is Gini impurity? | [03/1][b1] sec 1-3 |
-| How does a random forest work, and why does it beat one tree? | [03/2][b2] sec 3, 20; [13/1][f1] sec 3 |
-| Random forest feature importance, number of trees, depth? | [03/2][b2] sec 8-12, 19 |
+| How does a decision tree choose a split? What is Gini impurity? | [03/1][b1] sec 1-3, Q2 |
+| Gini vs entropy? What is information gain? | [03/1][b1] sec 5, Q3 |
+| How does a regression tree work? Can it extrapolate? | [03/1][b1] sec 6, Q4 |
+| Why do trees overfit? Pre-pruning vs post-pruning? | [03/1][b1] sec 7, Q5, Q6 |
+| Why don't trees need feature scaling? | [03/1][b1] sec 8, Q7 |
+| Why is a single tree unstable? What's wrong with impurity-based importance? | [03/1][b1] sec 9, 10, Q8, Q9 |
+| How does a random forest work, and why does it beat one tree? | [03/2][b2] sec 3, 21; [13/1][f1] sec 3 |
+| Random forest feature importance, number of trees, depth? | [03/2][b2] sec 8-12, 20 |
+| What is the out-of-bag (OOB) score? | [03/2][b2] sec 19 |
 | How does AdaBoost work (sample weights, learner weights)? | [03/3][b3] sec 9, 10, 16 |
 | How does gradient boosting work (fitting the gradients, learning rate)? | [03/4][b4] sec 3, 16, 17 |
 | What does XGBoost add (second-order gain, leaf weight −G/(H+λ), regularization)? | [03/5][b5] sec 15-18 |
@@ -239,6 +254,7 @@ Revision order before an interview: [13/1][f1], [13/2][f2], [KNN][knn], then the
 | Collaborative filtering vs content-based? | [recsys][rec] sec 4, 5 |
 | Matrix factorization? | [recsys][rec] sec 6 |
 | Two-tower model, retrieval + ranking architecture? | [recsys][rec] sec 9-13 |
+| The cold-start problem? | [recsys][rec] sec 16 |
 | How do recommenders connect to RAG? | [recsys][rec] sec 15 |
 
 ### Time series
@@ -261,30 +277,49 @@ Revision order before an interview: [13/1][f1], [13/2][f2], [KNN][knn], then the
 
 sklearn syntax for every algorithm: [cheatsheet][cs].
 
+## Trade-off questions
+
+"Why X and not Y?" questions, and where each trade-off is explained.
+
+| Trade-off | Where |
+|---|---|
+| Simple vs complex model (bias vs variance) | [13/1][f1] sec 3, Q1 |
+| L1 vs L2 regularization | [13/1][f1] sec 4, Q5 |
+| Bagging vs boosting | [13/1][f1] sec 3, Q13 |
+| Precision vs recall, and where to set the threshold | [13/2][f2] sec 4, Q11 |
+| ROC-AUC vs PR-AUC | [13/2][f2] sec 5, Q10 |
+| MAE vs RMSE | [13/2][f2] sec 2, Q2 |
+| Macro vs micro vs weighted averaging | [13/2][f2] sec 7, Q13 |
+| Grid vs random vs Bayesian search | [13/4][f4] sec 23 |
+| Normal equation vs gradient descent; batch vs mini-batch vs SGD | [01/6][l6] |
+| Softmax vs one-vs-rest | [02/5][g5] |
+| Gini vs entropy; pre-pruning vs post-pruning | [03/1][b1] sec 5, 7 |
+| OOB score vs cross-validation | [03/2][b2] sec 19 |
+| Random forest vs gradient boosting | [03/6][b6] sec 13 |
+| XGBoost vs LightGBM vs CatBoost | [CatBoost][b7] sec 16 |
+| SVM vs logistic regression vs trees | [SVM][svm] sec 10, Q15 |
+| KNN vs logistic regression; exact vs approximate neighbour search | [KNN][knn] Q11, sec 9 |
+| Naive Bayes vs logistic regression (generative vs discriminative) | [Naive Bayes][nb] sec 27; [13/1][f1] Q15 |
+| LDA vs QDA | [QDA][qda] sec 19 |
+| K-Means vs hierarchical vs DBSCAN vs GMM | [DBSCAN][db] sec 33 |
+| PCA vs t-SNE vs UMAP | [t-SNE][tsne] sec 7, Q14 |
+| Isolation Forest vs LOF vs One-Class SVM | [Isolation Forest][if] sec 27, 28 |
+| Collaborative vs content-based filtering; exploration vs exploitation | [recsys][rec] sec 4, 5, 16 |
+| LIME vs SHAP; impurity vs permutation importance | [13/5][f5] sec 15, "Permutation importance" |
+| CUPED vs a plain A/B test | [13/7][f7] sec 10 |
+| TF-IDF / BM25 vs word2vec vs contextual embeddings | [13/8][f8] sec 14 |
+| Classical model vs LLM | [13/8][f8] "Classical model vs LLM" |
+| Batch vs online inference | [13/6][f6] |
+
 ## Not in the notebooks yet
 
 Short answers for now; these still need to go into the notebooks.
 
 | Question | Short answer |
 |---|---|
-| Gini vs entropy? Information gain? | Both measure how mixed a node is: Gini = 1 − Σp², entropy = −Σp·log₂p. Information gain = parent impurity − weighted child impurity. They usually pick almost the same splits; Gini is a little faster. |
-| How do you prune a tree? | Pre-pruning stops early (`max_depth`, `min_samples_leaf`). Post-pruning grows the full tree, then cuts back weak branches (cost-complexity pruning, `ccp_alpha` in sklearn). |
-| Why don't trees need feature scaling? | A split compares one feature with a threshold. Scaling doesn't change the order of the values, so the splits stay the same. |
-| What is the out-of-bag (OOB) score? | Each tree's bootstrap sample leaves out about 37% of the rows. Scoring each row with only the trees that never saw it gives a free validation score (`oob_score=True`). |
-| What are the assumptions of linear regression? | A linear relationship, independent errors, constant error variance (homoscedasticity), normally distributed errors (needed for p-values and intervals), and no strong multicollinearity. |
-| Normal equation vs gradient descent? | Normal equation: w = (XᵀX)⁻¹Xᵀy, exact in one step but O(d³) and fails if XᵀX is singular. Gradient descent scales to many features and rows. |
-| Batch vs stochastic vs mini-batch gradient descent? | Batch uses all rows per step (stable, slow). Stochastic uses one row (fast, noisy). Mini-batch uses small batches and is the standard in deep learning. |
-| How do you read a logistic regression coefficient? | w is the change in log-odds for a one-unit increase in the feature; e^w is the odds ratio. |
-| What is softmax regression? | Logistic regression for K classes: softmax turns K scores into probabilities that sum to 1, trained with cross-entropy. |
-| Bayesian optimization (Optuna)? | It models score as a function of the hyperparameters and tries next where improvement looks likely, so it needs fewer trials than grid or random search. |
-| LIME vs SHAP? | LIME fits a simple model around one prediction using perturbed samples. SHAP uses Shapley values: consistent and additive, but slower except for trees. |
-| What is CUPED? | It reduces the variance of an A/B test by adjusting the metric with a pre-experiment covariate (often the same metric before the test), so you need fewer users. |
-| The cold-start problem in recommendations? | New users or items have no interactions. Use content features, popularity, onboarding questions, or a two-tower model with content features. |
 | KPSS vs ADF? | ADF's null hypothesis is "not stationary"; KPSS's is "stationary". Running both gives a clearer answer. |
 | What is MASE? | MAE divided by the in-sample MAE of a (seasonal) naive forecast. Below 1 beats naive. It compares across series of different scales and works with zeros. |
 | What is Prophet? | An additive model (trend + seasonality + holidays) that is quick to fit. A good baseline for business series with strong seasonality. |
-| Stemming vs lemmatization? | Stemming chops suffixes by rule; lemmatization maps to the dictionary form. Rarely needed with the subword tokenizers of modern models. |
-| What is word2vec? | Static word vectors learned by predicting neighbouring words (skip-gram, CBOW). One vector per word in every context, unlike transformer embeddings. |
 
 [f1]: 13-ml-fundamentals/1-ml-fundamentals.ipynb
 [f2]: 13-ml-fundamentals/2-ml-metrics.ipynb
@@ -298,10 +333,12 @@ Short answers for now; these still need to go into the notebooks.
 [l3]: 01-linear-regression/3-linear-regression-multi-features.ipynb
 [l4]: 01-linear-regression/4-feature-scaling-&-learning-rate.ipynb
 [l5]: 01-linear-regression/5-feature-engineering-&-polynomial-regression.ipynb
+[l6]: 01-linear-regression/6-scikit-learn-linear-regg.ipynb
 [g1]: 02-logistic-regression/1-try-linear-regg-on-classification.ipynb
 [g2]: 02-logistic-regression/2-sigmoid-function-&-decision-boundary.ipynb
 [g3]: 02-logistic-regression/3-logistic-loss-&-cost.ipynb
 [g4]: 02-logistic-regression/4-logistic-gradient-descent.ipynb
+[g5]: 02-logistic-regression/5-scikit-learn-logistic-regression.ipynb
 [g6]: 02-logistic-regression/6-overfitting-regularization.ipynb
 [b1]: 03-decision-trees-and-ensembles/1-decision-tree.ipynb
 [b2]: 03-decision-trees-and-ensembles/2-random-forest.ipynb
